@@ -20,3 +20,5 @@
   + http://usefulstuff.io/2013/06/encoding-csv-and-ruby/
   + http://ruby-doc.org/core-1.9.3/String.html#method-i-encode
   + http://stackoverflow.com/questions/7047944/ruby-read-csv-file-as-utf-8-and-or-convert-ascii-8bit-encoding-to-utf-8
+  + https://stackoverflow.com/questions/5265021/rails-rake-task-access-to-model-class/5265070#5265070
+  + http://data-creative.info/process-documentation/2015/07/25/how-to-deploy-a-rails-app-to-heroku.html

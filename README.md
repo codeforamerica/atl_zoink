@@ -51,4 +51,4 @@ Extract, transform, and load all .csv data into a database.
 bundle exec rake atlanta:etl
 ````
 
-Visit live at `todo: production_url`.
+Visit live at https://courtbot-reporter.herokuapp.com/.
