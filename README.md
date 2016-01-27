@@ -53,12 +53,26 @@ bundle exec rake atlanta:etl
 
 ## Deployment
 
-Update source code on production.
+NOTE: Staging and production servers use different databases but share the same database credentials.
+
+### Staging
+
+Update source code on staging.
 
 ```` sh
-git push heroku master
+git push heroku-staging master
 ````
 
 [Debug](http://data-creative.info/process-documentation/2015/07/25/how-to-deploy-a-rails-app-to-heroku.html#debugging) as necessary.
+
+Visit the application live at https://courtbot-reporter-staging.herokuapp.com/.
+
+### Production
+
+Update source code on production.
+
+```` sh
+git push heroku-production master
+````
 
 Visit the application live at https://courtbot-reporter.herokuapp.com/.

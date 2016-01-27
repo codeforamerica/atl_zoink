@@ -24,3 +24,6 @@
   + http://data-creative.info/process-documentation/2015/07/25/how-to-deploy-a-rails-app-to-heroku.html
   + http://stackoverflow.com/questions/14333043/is-there-any-way-convert-text-to-time-in-postgresql
   + http://www.postgresql.org/docs/8.1/static/functions-formatting.html
+  + http://kb.tableau.com/articles/knowledgebase/top-n-and-others-sets
+  + http://www.mattboldt.com/heroku-staging-production-environments/
+  + https://help.github.com/articles/renaming-a-remote/
