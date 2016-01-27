@@ -1,8 +1,8 @@
 # Courtbot Reporter
 
-Performs ETL on data from any and all courtbot instances, then produces insights and interactive web-based data visualizations.
+Performs ETL on data from any and all Courtbot APIs, then produces insights and interactive web-based data visualizations.
 
-Currently-supported courtbots include:
+Currently-supported Courtbots include:
   + [Courtbot - Atlanta](https://github.com/codeforamerica/courtbot)
 
 ## Installation
@@ -48,7 +48,7 @@ bundle exec rake db:migrate
 Extract, transform, and load all .csv data into a database.
 
 ```` sh
-bundle exec rake extract_transform_and_load
+bundle exec rake atlanta:etl
 ````
 
-Visit live at <production url here>.
+Visit live at `todo: production_url`.

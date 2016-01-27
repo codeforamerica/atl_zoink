@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20160127005233) do
   add_index "appointments", ["citation_id"], name: "index_appointments_on_citation_id", using: :btree
 
   create_table "citations", force: :cascade do |t|
-    t.string   "guid",         null: false
+    t.string   "guid"
     t.integer  "violation_id", null: false
     t.string   "location"
     t.boolean  "payable"
@@ -42,11 +42,12 @@ ActiveRecord::Schema.define(version: 20160127005233) do
 
   create_table "data_urls", force: :cascade do |t|
     t.date     "upload_date",                     null: false
+    t.datetime "requested_at"
     t.integer  "response_code"
     t.string   "string_encoding"
     t.integer  "row_count"
     t.boolean  "extracted",       default: false
-    t.boolean  "extracted_at"
+    t.datetime "extracted_at"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
   end
@@ -54,7 +55,7 @@ ActiveRecord::Schema.define(version: 20160127005233) do
   add_index "data_urls", ["upload_date"], name: "index_data_urls_on_upload_date", unique: true, using: :btree
 
   create_table "violations", force: :cascade do |t|
-    t.string   "guid",        null: false
+    t.string   "guid"
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false

@@ -2,11 +2,12 @@ class CreateDataUrls < ActiveRecord::Migration
   def change
     create_table :data_urls do |t|
       t.date :upload_date, :null => false
+      t.datetime :requested_at
       t.integer :response_code
       t.string :string_encoding
       t.integer :row_count
       t.boolean :extracted, :default => false
-      t.boolean :extracted_at
+      t.datetime :extracted_at
       t.timestamps null: false
     end
 

@@ -1,10 +1,10 @@
 class DataUrl < ActiveRecord::Base
-  def self.extracted
-    where(:extracted => true)
+  def self.found
+    where("response_code IS NULL OR response_code <> 404")
   end
 
   def self.unextracted
-    all - extracted
+    where("extracted IS NULL OR extracted <> true")
   end
 
   def url_date
