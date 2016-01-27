@@ -51,4 +51,14 @@ Extract, transform, and load all .csv data into a database.
 bundle exec rake atlanta:etl
 ````
 
-Visit live at https://courtbot-reporter.herokuapp.com/.
+## Deployment
+
+Update source code on production.
+
+```` sh
+git push heroku master
+````
+
+[Debug](http://data-creative.info/process-documentation/2015/07/25/how-to-deploy-a-rails-app-to-heroku.html#debugging) as necessary.
+
+Visit the application live at https://courtbot-reporter.herokuapp.com/.
