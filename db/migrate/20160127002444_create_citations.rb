@@ -1,19 +1,14 @@
-require_relative "../../app/models.rb"
-
 class CreateCitations < ActiveRecord::Migration
   def change
     create_table :citations do |t|
-      t.string :guid
-      t.integer :violation_id
+      t.string :guid, :null => false
+      t.integer :violation_id, :null => false
       t.string :location
       t.boolean :payable
-
-      t.timestamps
+      t.timestamps null: false
     end
 
     add_index :citations, :guid
     add_index :citations, :violation_id
   end
 end
-
-CreateCitations.migrate(:up)
