@@ -25,9 +25,9 @@ Create user.
 
 ```` sh
 psql
-CREATE USER courtbot WITH ENCRYPTED PASSWORD 'c0urtb0t!';
-ALTER USER courtbot CREATEDB;
-ALTER USER courtbot WITH SUPERUSER;
+CREATE USER courtbot_reporter WITH ENCRYPTED PASSWORD 'c0urtb0t!';
+ALTER USER courtbot_reporter CREATEDB;
+ALTER USER courtbot_reporter WITH SUPERUSER;
 \q
 ````
 
