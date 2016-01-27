@@ -22,3 +22,5 @@
   + http://stackoverflow.com/questions/7047944/ruby-read-csv-file-as-utf-8-and-or-convert-ascii-8bit-encoding-to-utf-8
   + https://stackoverflow.com/questions/5265021/rails-rake-task-access-to-model-class/5265070#5265070
   + http://data-creative.info/process-documentation/2015/07/25/how-to-deploy-a-rails-app-to-heroku.html
+  + http://stackoverflow.com/questions/14333043/is-there-any-way-convert-text-to-time-in-postgresql
+  + http://www.postgresql.org/docs/8.1/static/functions-formatting.html
