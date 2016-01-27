@@ -5,7 +5,9 @@ Performs ETL on data from any and all Courtbot APIs, then produces insights and 
 Currently-supported Courtbots include:
   + [Courtbot - Atlanta](https://github.com/codeforamerica/courtbot)
 
-## Installation
+## Contributing
+
+### Installation
 
 Download source code and install package dependencies.
 
@@ -15,7 +17,7 @@ cd courtbot-reporter
 bundle install
 ````
 
-## Prerequisites
+### Prerequisites
 
 [Install](http://data-creative.info/process-documentation/2015/07/18/how-to-set-up-a-mac-development-environment.html#ruby) ruby and bundler and rails.
 
@@ -43,7 +45,7 @@ Migrate database.
 bundle exec rake db:migrate
 ````
 
-## Usage
+### Usage
 
 Extract, transform, and load all .csv data into a database.
 
@@ -51,11 +53,31 @@ Extract, transform, and load all .csv data into a database.
 bundle exec rake atlanta:etl
 ````
 
-## Deployment
+
+
+
+
+
+
+
+
+
+
+### Testing
+
+Create tests for new features.
+
+Run all tests and make sure they pass before merging code into the master branch.
+
+```` sh
+bundle exec rspec spec/
+````
+
+### Deploying
 
 NOTE: Staging and production servers use different databases but share the same database credentials.
 
-### Staging
+#### Staging
 
 Update source code on staging.
 
@@ -67,7 +89,7 @@ git push heroku-staging master
 
 Visit the application live at https://courtbot-reporter-staging.herokuapp.com/.
 
-### Production
+#### Production
 
 Update source code on production.
 
