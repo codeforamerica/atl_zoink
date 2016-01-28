@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AtlantaEndpointDetectionProcess, type: :model do
+RSpec.describe AtlantaEndpointDetectionProcess do
   describe ".perform" do
     it "should persist an atlanta_endpoint object for each possible upload date" do
       AtlantaEndpointDetectionProcess.perform

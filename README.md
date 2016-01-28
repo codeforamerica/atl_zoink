@@ -53,7 +53,11 @@ Detect all possible Courtbot API endpoints.
 bundle exec rake atlanta:detect
 ````
 
+Extract .csv data from eligible Courtbot API endpoints.
 
+```` sh
+bundle exec rake atlanta:extract
+````
 
 
 
