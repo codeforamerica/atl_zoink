@@ -31,3 +31,7 @@
   + http://stackoverflow.com/questions/14890375/rspec-how-could-i-use-the-array-include-matcher-in-the-expect-syntax
   + http://betterspecs.org/
   + http://stackoverflow.com/questions/31562040/git-rebase-i-does-nothing
+  + https://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/
+  + https://bluerogue251.wordpress.com/2014/03/13/activerecordstatementinvalid-pginfailedsqltransaction/
+  + http://stackoverflow.com/questions/21138207/activerecordstatementinvalid-pg-infailedsqltransaction/22383251#22383251
+  + https://relishapp.com/rspec/rspec-rails/docs/transactions
