@@ -35,3 +35,4 @@
   + https://bluerogue251.wordpress.com/2014/03/13/activerecordstatementinvalid-pginfailedsqltransaction/
   + http://stackoverflow.com/questions/21138207/activerecordstatementinvalid-pg-infailedsqltransaction/22383251#22383251
   + https://relishapp.com/rspec/rspec-rails/docs/transactions
+  + https://devcenter.heroku.com/articles/git#deploying-code

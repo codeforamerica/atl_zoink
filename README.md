@@ -83,10 +83,12 @@ NOTE: Staging and production servers use different databases but share the same 
 
 #### Staging
 
-Update source code on staging.
+Update source code on staging (from master or another branch).
 
 ```` sh
 git push heroku-staging master
+# OR ...
+git push heroku-staging yourbranch:master
 ````
 
 [Debug](http://data-creative.info/process-documentation/2015/07/25/how-to-deploy-a-rails-app-to-heroku.html#debugging) as necessary.
