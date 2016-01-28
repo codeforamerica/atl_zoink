@@ -11,9 +11,9 @@ RSpec.describe AtlantaDataExtractionProcess do
       expect(AtlantaEndpoint.pluck(:response_code).uniq.compact.sort).to eql([200,404])
     end
 
-    ###it "should ascertain and persist the .csv string endoding for each endpoint." do
-    ###  expect(AtlantaEndpoint.pluck(:string_encoding).uniq).to include(["UTF-8","ASCII-8BIT"])
-    ###end
+    it "should ascertain and persist the .csv string endoding for each endpoint." do
+      expect(AtlantaEndpoint.pluck(:string_encoding).uniq.compact.sort).to eql(["ASCII-8BIT", "UTF-8"])
+    end
 
     ###it "should persist all available .csv rows in the database." do
     ###  pending

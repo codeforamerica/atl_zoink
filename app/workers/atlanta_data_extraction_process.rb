@@ -4,7 +4,7 @@ class AtlantaDataExtractionProcess
     puts "EXTRACTING DATA FROM #{endpoints.count} ENDPOINTS ..."
 
     endpoints.each do |endpoint|
-      puts endpoint.inspect
+      puts endpoint.url
       requested_at = Time.zone.now
       response = HTTParty.get(endpoint.url)
       response_received_at = Time.zone.now

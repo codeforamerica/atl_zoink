@@ -30,3 +30,4 @@
   + http://stackoverflow.com/questions/1819614/how-do-i-globally-configure-rspec-to-keep-the-color-and-format-specdoc-o
   + http://stackoverflow.com/questions/14890375/rspec-how-could-i-use-the-array-include-matcher-in-the-expect-syntax
   + http://betterspecs.org/
+  + http://stackoverflow.com/questions/31562040/git-rebase-i-does-nothing
