@@ -47,10 +47,10 @@ bundle exec rake db:migrate
 
 ### Usage
 
-Extract, transform, and load all .csv data into a database.
+Detect all possible Courtbot API endpoints.
 
 ```` sh
-bundle exec rake atlanta:etl
+bundle exec rake atlanta:detect
 ````
 
 

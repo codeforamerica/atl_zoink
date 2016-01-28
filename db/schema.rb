@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160127005233) do
+ActiveRecord::Schema.define(version: 20160127233004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,20 @@ ActiveRecord::Schema.define(version: 20160127005233) do
   end
 
   add_index "appointments", ["citation_id"], name: "index_appointments_on_citation_id", using: :btree
+
+  create_table "atlanta_endpoints", force: :cascade do |t|
+    t.date     "upload_date",          null: false
+    t.datetime "requested_at"
+    t.datetime "response_received_at"
+    t.integer  "response_code"
+    t.string   "string_encoding"
+    t.integer  "row_count"
+    t.datetime "extracted_at"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "atlanta_endpoints", ["upload_date"], name: "index_atlanta_endpoints_on_upload_date", unique: true, using: :btree
 
   create_table "citations", force: :cascade do |t|
     t.string   "guid"
