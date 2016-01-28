@@ -1,6 +1,7 @@
 class AtlantaDataExtractionProcess
   def self.perform
-    endpoints = Rails.env == "production" ? AtlantaEndpoint.extraction_eligible : AtlantaEndpoint.extraction_testworthy
+    endpoints = Rails.env == "test" ? AtlantaEndpoint.extraction_testworthy : AtlantaEndpoint.extraction_eligible
+    endpoints = endpoints.order(:upload_date => :desc)
     puts "EXTRACTING DATA FROM #{endpoints.count} ENDPOINTS ..."
 
     endpoints.each do |endpoint|
@@ -9,13 +10,15 @@ class AtlantaDataExtractionProcess
       response = HTTParty.get(endpoint.url)
       response_received_at = Time.zone.now
 
-      if response.code == 200 && response.body.encoding == "UTF-8" #todo: fix encoding issue
+      if response.code == 200 && response.body.encoding.to_s == "UTF-8" #todo: fix encoding issue
         inserts = []
         rows = CSV.parse(response.body, {
           :col_sep => "|", # should parse pipe-delimited data
           :quote_char => "\x00", # should parse unexpected values like "SMITH, DANT"E",
           :encoding => response.body.encoding.to_s # should be able to read "ASCII-8BIT" characters like "\xA0"
         })
+
+        puts "FOUND #{rows.count} ROWS ..."
 
         rows.each do |row| # ["04-AUG-14", "PRICE, ROBERT ALAN", "REGINA DR", "6C", "03:00:00 PM", "4707082", "40-6-48", "FAILURE TO MAINTAIN LANE", "1"]
           inserts << "(
