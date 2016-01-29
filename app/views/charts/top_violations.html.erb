@@ -5,7 +5,9 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript">
 
-    d3.json("/api/v0/top-violations.json", function(error, response){
+    var request_url = "/api/v0/top-violations.json?limit=15" // the chart will only reasonably display around 15 bars without hiding some bar labels, which has the effect of making the chart misleading
+
+    d3.json(request_url, function(error, response){
         console.log(response.length)
         console.log(response)
         console.log(response[0])

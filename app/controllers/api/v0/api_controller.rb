@@ -1,6 +1,10 @@
 class Api::V0::ApiController < ApplicationController
 
   # Returns the top most-cited violations.
+  #
+  # @param params [Hash]
+  # @option params [Hash] limit A positive integer number of records to return. Corresponds to a SQL LIMIT clause value. Default is 50.
+  #
   # @example [
   #   {"violation_name": "FAILURE TO OBEY", "citation_count": 635},
   #   {"violation_name": "URINATING IN PUBLIC", "citation_count": 203},
@@ -9,6 +13,10 @@ class Api::V0::ApiController < ApplicationController
   #   {"violation_name": "SPEEDING 19 to 23 MPH OVER", "citation_count": 20}
   # ]
   def top_violations
+    limit = params[:limit]
+    limit = limit.try(:to_i)  # block sql-injection by converting (malicious) strings to zeros
+    limit = 50 if limit <= 0 # ... then convert zeros and negative numbers to a default value
+
     query_string =<<-SQL
       SELECT
         v.id AS violation_id
@@ -20,7 +28,7 @@ class Api::V0::ApiController < ApplicationController
       JOIN citations c ON c.violation_id = v.id
       GROUP BY 1,2,3
       ORDER BY citation_count DESC
-      LIMIT 15;
+      LIMIT #{limit};
     SQL
 
     query_results = ActiveRecord::Base.connection.execute(query_string)
