@@ -10,11 +10,13 @@
         console.log(response)
         console.log(response[0])
 
+        //debugger;
+
         var data_categories = response.map(function(row){ return row["violation_name"] })
-        var data_points = response.map(function(row){ return row["citation_count"] })
+        var data_points = response.map(function(row){ return parseInt(row["citation_count"]) })
 
         var data_series = [{
-            name: 'All citations',
+            name: 'ATL',
             data: data_points, // [635, 203, 107, 31, 20],
             color: 'steelblue'
         }]
@@ -56,7 +58,7 @@
                 }
             },
             legend: {
-                enabled:false,
+                //enabled:false,
                 layout: 'vertical',
                 align: 'right',
                 verticalAlign: 'top',
