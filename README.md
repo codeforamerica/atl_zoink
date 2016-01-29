@@ -104,3 +104,18 @@ git push heroku-production master
 ````
 
 Visit the application live at https://courtbot-reporter.herokuapp.com/.
+
+### Maintenance
+
+Initiate a new PG Backup from the Heroku Postgres console and click "Download" when it's ready.
+
+Restore production database on local machine.
+
+```` sh
+psql
+DROP DATABASE IF EXISTS courtbot_reporter_snapshot;
+CREATE DATABASE courtbot_reporter_snapshot;
+\q
+
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -U courtbot_reporter -d courtbot_reporter_snapshot latest.dump
+````
