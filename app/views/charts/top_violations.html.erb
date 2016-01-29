@@ -10,14 +10,22 @@
         console.log(response)
         console.log(response[0])
 
+        var future_response = [
+          {"violation_name": "FAILURE TO OBEY", "citation_count": 635},
+          {"violation_name": "URINATING IN PUBLIC", "citation_count": 203},
+          {"violation_name": "SAFETY BELT VIOLATION", "citation_count": 107},
+          {"violation_name": "FOLLOWING TOO CLOSELY", "citation_count": 31},
+          {"violation_name": "SPEEDING 19 to 23 MPH OVER", "citation_count": 20}
+        ]
+
+        var data_categories = future_response.map(function(row){ return row["violation_name"] })
+        var data_points = future_response.map(function(row){ return row["citation_count"] })
+
         var data_series = [{
             name: 'All citations',
-            data: [635, 203, 107, 31, 20], // todo: sort descending
+            data: data_points, // [635, 203, 107, 31, 20],
             color: 'steelblue'
         }]
-
-        // todo: match the order of corresponding category name
-        var data_categories = ['FAILURE TO OBEY', 'Urinating in Public', 'Safety Belt Violation', 'Following too closely', 'SPEEDING 19 to 23 MPH OVER']
 
         $('#chart-container').highcharts({
             chart: {
