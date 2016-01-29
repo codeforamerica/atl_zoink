@@ -1,6 +1,7 @@
 class AtlantaEndpointsController < ApplicationController
   def index
     @endpoints = AtlantaEndpoint.all.order(:upload_date => :desc)
-    @message = "Long live the bot."
+    @row_count = AtlantaEndpoint.sum(:row_count)
+    @extracted_endpoint_count = AtlantaEndpoint.extracted.count
   end
 end

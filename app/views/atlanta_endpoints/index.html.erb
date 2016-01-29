@@ -1,6 +1,8 @@
-<h1>Courtbot Reporter</h1>
+<h2>Data Sources</h2>
 
-<p class="lead"><%= @message %></p>
+<p>
+  <%= number_with_delimiter(@row_count, :delimiter => ',') %> rows have been extracted from <%= number_with_delimiter(@extracted_endpoint_count, :delimiter => ',') %> valid urls posted by 1 courtbot.
+</p>
 
 <table>
   <thead>

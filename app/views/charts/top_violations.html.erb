@@ -1,0 +1,16 @@
+<h2>Data Visualizations</h2>
+
+<h3>Top Violations</h3>
+
+<div id="chart-container"></div>
+
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+    d3.json("api/top-violations.json", function(error, response){
+        console.log(response.length)
+        console.log(response)
+        console.log(response[0])
+    })
+
+</script>
