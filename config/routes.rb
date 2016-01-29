@@ -16,6 +16,12 @@ Rails.application.routes.draw do
 
   get 'data_standards' => 'data_standards#index', :as => 'data_standards'
 
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v0 do
+      get 'top-violations' => 'api#top_violations'
+    end
+  end
+
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
