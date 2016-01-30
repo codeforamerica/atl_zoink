@@ -56,12 +56,17 @@ class AtlantaDataExtractionProcess
     puts "EXTRACTED XXX ROWS FROM #{endpoints.count} ENDPOINTS ..."
   end
 
+  OFFENDING_CHAR = "\xA0".force_encoding("ASCII-8BIT")
+
   def self.cleanse(str)
+    str = str.try(:gsub, OFFENDING_CHAR, "")
+
     begin
-      str1 = str.try(:gsub, "'", "???") #.try(:gsub, "\xA0","???")
-    rescue => e
-      puts "#{e.class} -- #{e.message}"
-      binding.pry unless Rails.env == "production"
+      str = str.try(:encode, "UTF-8")
+    rescue Encoding::UndefinedConversionError => e
+      binding.pry
     end
+
+    str = str.try(:gsub, "'", "???")
   end
 end
