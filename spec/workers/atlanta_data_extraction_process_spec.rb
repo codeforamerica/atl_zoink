@@ -38,14 +38,14 @@ RSpec.describe AtlantaDataExtractionProcess do
     ###end
 
     context "when the csv string contains zero rows" do
-      it "should not throw the error ActiveRecord::StatementInvalid: PG::SyntaxError: ERROR:  syntax error at end of input" do
-        expect{AtlantaDataExtractionProcess.perform}.to_not raise_error(ActiveRecord::StatementInvalid)
+      it "should not attempt to insert rows into the database but should consider the extraction as having happened; specifically should avoid ActiveRecord::StatementInvalid: PG::SyntaxError: ERROR:  syntax error at end of input" do
+        expect{AtlantaDataExtractionProcess.perform}.to_not raise_error(/PG::SyntaxError/)
       end
     end
 
     context "when the csv string encoding is ASCII-8BIT" do
-      it "should convert string encoding to UTF-8." do
-        pending
+      it "should convert string encoding to UTF-8; should avoid ActiveRecord::StatementInvalid: PG::CharacterNotInRepertoire: ERROR:  invalid byte sequence for encoding 'UTF8': 0xa0" do
+        expect{AtlantaDataExtractionProcess.perform}.to_not raise_error(/PG::CharacterNotInRepertoire/)
       end
     end
   end

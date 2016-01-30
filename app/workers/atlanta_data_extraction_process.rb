@@ -10,7 +10,7 @@ class AtlantaDataExtractionProcess
       response = HTTParty.get(endpoint.url)
       response_received_at = Time.zone.now
 
-      if response.code == 200 && response.body.encoding.to_s == "UTF-8" #todo: fix encoding issue
+      if response.code == 200 #&& response.body.encoding.to_s == "UTF-8" #todo: fix encoding issue
         inserts = []
         rows = CSV.parse(response.body, {
           :col_sep => "|", # should parse pipe-delimited data
