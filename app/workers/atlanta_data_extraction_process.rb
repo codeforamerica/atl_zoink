@@ -18,6 +18,8 @@ class AtlantaDataExtractionProcess
           :encoding => response.body.encoding.to_s # should be able to read "ASCII-8BIT" characters like "\xA0"
         })
 
+        #unless rows.empty?
+        #end
         puts "FOUND #{rows.count} ROWS ..."
 
         rows.each do |row| # ["04-AUG-14", "PRICE, ROBERT ALAN", "REGINA DR", "6C", "03:00:00 PM", "4707082", "40-6-48", "FAILURE TO MAINTAIN LANE", "1"]
@@ -37,12 +39,12 @@ class AtlantaDataExtractionProcess
 
         sql_string = "INSERT INTO atlanta_endpoint_objects (endpoint_id, date, defendant, location, room, time, guid, violation, description, payable) VALUES #{inserts.join(', ')}"
 
-        begin
+        #begin
           ActiveRecord::Base.connection.execute(sql_string)
-        rescue => e
-          puts "#{e.class} -- #{e.message}"
-          binding.pry unless Rails.env == "production"
-        end
+        #rescue => e
+        #  puts "#{e.class} -- #{e.message}"
+        #  binding.pry unless Rails.env == "production"
+        #end
 
         extracted_at = Time.zone.now
       end
