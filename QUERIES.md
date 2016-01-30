@@ -52,6 +52,8 @@ extracted_url_count | min_load_time | max_load_time | avg_load_time
 
 > NOTE: the results below do not (yet) include data from the 11 files which have ascii encoding ...
 
+> NOTE: the findings below result from queries run on local database (macbook air) ...
+
 The full table of extracted objects is large and slow to query. And indexing may not be an applicable solution.
 
 ```` sql
@@ -64,13 +66,321 @@ SELECT count(DISTINCT guid) FROM atlanta_endpoint_objects; -- > 390,831 rows; 24
 ### Summary Statistics and Findings
 
 ```` sql
-SELECT count(DISTINCT id) FROM atlanta_endpoint_objects; -- > 6,734,949 rows; 6,520 ms
-SELECT count(DISTINCT guid) FROM atlanta_endpoint_objects; -- > 390,831 rows; 243,083 ms
-SELECT count(DISTINCT violation) FROM atlanta_endpoint_objects; -- > 1054 rows; 177,763 ms
+SELECT count(DISTINCT id) FROM atlanta_endpoint_objects; --> 6,734,949 rows; 6,520 ms
+SELECT count(DISTINCT guid) FROM atlanta_endpoint_objects; --> 390,831 rows; 243,083 ms
+SELECT count(DISTINCT violation) FROM atlanta_endpoint_objects; --> 1,054 rows; 177,763 ms
+SELECT count(DISTINCT description) FROM atlanta_endpoint_objects; --> 1,009 rows; 203,546 ms
+SELECT count(DISTINCT defendant) FROM atlanta_endpoint_objects; --> 266,159 rows; 272,806 ms
+SELECT count(DISTINCT location) FROM atlanta_endpoint_objects; --> 149,025 rows; 265,849 ms
+SELECT count(DISTINCT room) FROM atlanta_endpoint_objects; --> 17 rows; 39,646 ms
+-- ... such few rooms probably refer to the same building ... but which one?
+SELECT count(DISTINCT time) FROM atlanta_endpoint_objects; --> 37 rows; 46,182 ms
 ````
+
+#### Payables
+
+```` sql
+SELECT
+  count(DISTINCT CASE WHEN payable = TRUE THEN guid end) AS payable_citation_count
+  ,count(DISTINCT CASE WHEN payable = FALSE THEN guid end) AS nonpayable_citation_count
+  ,count(DISTINCT CASE WHEN payable IS NULL THEN guid end) AS nullpayable_citation_count
+  ,count(DISTINCT CASE WHEN payable = TRUE THEN guid end)
+    * 1.00 -- hack decimal precision
+    / count(DISTINCT guid) AS payable_citation_percentage
+
+  ,count(DISTINCT CASE WHEN payable = TRUE THEN id end) AS payable_appt_count
+  ,count(DISTINCT CASE WHEN payable = FALSE THEN id end) AS nonpayable_appt_count
+  ,count(DISTINCT CASE WHEN payable IS NULL THEN id end) AS nullpayable_appt_count
+  ,count(DISTINCT CASE WHEN payable = TRUE THEN id end)
+    * 1.00 -- hack decimal precision
+    / count(DISTINCT id) AS payable_appt_percentage
+FROM atlanta_endpoint_objects; -- > 484,133 ms
+````
+
+=>
+
+payable_citation_count | nonpayable_citation_count | nullpayable_citation_count | payable_citation_percentage | payable_appt_count | nonpayable_appt_count | nullpayable_appt_count | payable_appt_percentage
+--- | --- | --- | --- | --- | --- | --- | ---
+228635 | 166649 | 0 | 0.58499709593149 | 3206357 | 3528592 | 0 | 0.476077398655877
+
+
+... 58.5% of the citations vs 47.6% of the appointments are payable.
+
+
+
+
+#### Appointment Times and Room Numbers
+
+```` sql
+-- how many appointments per time?
+SELECT
+  TO_TIMESTAMP(time, 'HH24:MI:SS AM')::TIME AS appointment_time
+  ,count(DISTINCT id) AS row_count
+FROM atlanta_endpoint_objects
+GROUP BY 1
+ORDER BY 1; -- > 27,645 ms
+````
+
+=>
+
+appointment_time | row_count
+--- | ---
+00:00:00 | 10
+01:00:00 | 956
+01:10:00 | 2
+01:30:00 | 5
+01:50:00 | 7
+03:00:00 | 384
+03:15:00 | 27
+05:00:00 | 9
+08:00:00 | 3273610
+08:10:00 | 40
+08:11:00 | 28
+08:30:00 | 217
+09:00:00 | 64447
+09:16:00 | 44
+09:30:00 | 158
+10:00:00 | 667395
+10:10:00 | 9
+10:12:00 | 92
+10:29:00 | 48
+10:30:00 | 3
+11:00:00 | 907364
+11:19:00 | 54
+11:30:00 | 22
+12:00:00 | 8
+12:19:00 | 15
+12:30:00 | 6
+13:00:00 | 376269
+13:30:00 | 60
+14:00:00 | 10033
+14:20:00 | 12
+14:30:00 | 3
+15:00:00 | 1433440
+16:00:00 | 22
+17:00:00 | 100
+18:00:00 | 25
+19:00:00 | 24
+20:14:00 | 1
+
+```` sql
+-- how many appointments per room?
+SELECT
+  room
+  ,count(DISTINCT id) AS row_count
+FROM atlanta_endpoint_objects
+GROUP BY 1
+ORDER BY 1; -- > 51,008 ms
+````
+
+=>
+
+room | row_count
+--- | ---
+ | 880
+1A | 346332
+1B | 83084
+3A | 214696
+3B | 433053
+5A | 808703
+5B | 393118
+5C | 552778
+5D | 179675
+6A | 383304
+6B | 462149
+6C | 525780
+6D | 741947
+CNVCRT | 1141476
+JAIL | 89
+JRYASM | 432682
+MIX | 35203
+
+... null room numbers for 880 appointments. :-/
+
+
+```` sql
+-- how many appointments per room and time combination?
+SELECT
+  room
+  ,TO_TIMESTAMP(time, 'HH24:MI:SS AM')::TIME AS appointment_time
+  ,count(DISTINCT id) AS row_count
+FROM atlanta_endpoint_objects
+GROUP BY 1,2
+ORDER BY 1,2 DESC
+; -- > 56,833 ms
+````
+
+=>
+
+room | appointment_time | row_count
+--- | --- | ---
+ | 15:00:00 | 237
+ | 13:00:00 | 42
+ | 11:00:00 | 145
+ | 10:00:00 | 237
+ | 09:00:00 | 18
+ | 08:00:00 | 201
+1A | 15:00:00 | 10111
+1A | 13:00:00 | 25848
+1A | 11:00:00 | 256985
+1A | 10:00:00 | 29207
+1A | 09:00:00 | 17
+1A | 08:30:00 | 129
+1A | 08:00:00 | 24015
+1A | 03:00:00 | 1
+1A | 01:00:00 | 19
+1B | 16:00:00 | 22
+1B | 15:00:00 | 40713
+1B | 13:00:00 | 40141
+1B | 11:00:00 | 158
+1B | 10:00:00 | 1747
+1B | 09:00:00 | 56
+1B | 08:00:00 | 137
+1B | 01:00:00 | 110
+3A | 15:00:00 | 3654
+3A | 13:30:00 | 60
+3A | 13:00:00 | 1259
+3A | 11:00:00 | 35279
+3A | 10:00:00 | 2219
+3A | 09:00:00 | 197
+3A | 08:00:00 | 172028
+3B | 18:00:00 | 23
+3B | 15:00:00 | 70305
+3B | 14:00:00 | 90
+3B | 13:00:00 | 31705
+3B | 12:30:00 | 6
+3B | 11:30:00 | 16
+3B | 11:00:00 | 4393
+3B | 10:12:00 | 92
+3B | 10:00:00 | 158523
+3B | 09:30:00 | 158
+3B | 09:00:00 | 4392
+3B | 08:30:00 | 86
+3B | 08:11:00 | 28
+3B | 08:00:00 | 163226
+3B | 01:30:00 | 5
+3B | 01:00:00 | 5
+5A | 15:00:00 | 53796
+5A | 14:00:00 | 2189
+5A | 13:00:00 | 9980
+5A | 11:00:00 | 315
+5A | 10:30:00 | 3
+5A | 10:29:00 | 48
+5A | 10:00:00 | 2661
+5A | 09:00:00 | 117
+5A | 08:00:00 | 739556
+5A | 03:00:00 | 22
+5A | 01:00:00 | 16
+5B | 17:00:00 | 1
+5B | 15:00:00 | 224512
+5B | 14:00:00 | 129
+5B | 13:00:00 | 51252
+5B | 11:19:00 | 54
+5B | 10:00:00 | 1135
+5B | 09:16:00 | 12
+5B | 09:00:00 | 282
+5B | 08:00:00 | 115573
+5B | 03:00:00 | 168
+5C | 17:00:00 | 99
+5C | 15:00:00 | 54682
+5C | 14:00:00 | 2046
+5C | 13:00:00 | 28433
+5C | 12:19:00 | 15
+5C | 11:00:00 | 172419
+5C | 10:00:00 | 150654
+5C | 09:00:00 | 820
+5C | 08:00:00 | 143224
+5C | 01:00:00 | 386
+5D | 15:00:00 | 65688
+5D | 14:00:00 | 336
+5D | 13:00:00 | 1513
+5D | 11:00:00 | 4628
+5D | 10:00:00 | 538
+5D | 09:00:00 | 52
+5D | 08:00:00 | 106920
+6A | 15:00:00 | 32088
+6A | 14:00:00 | 1
+6A | 13:00:00 | 778
+6A | 11:30:00 | 6
+6A | 11:00:00 | 109
+6A | 10:10:00 | 9
+6A | 10:00:00 | 63965
+6A | 09:00:00 | 3
+6A | 08:30:00 | 2
+6A | 08:00:00 | 286262
+6A | 03:00:00 | 12
+6A | 01:00:00 | 69
+6B | 19:00:00 | 24
+6B | 15:00:00 | 220919
+6B | 14:30:00 | 3
+6B | 14:20:00 | 12
+6B | 14:00:00 | 119
+6B | 13:00:00 | 123194
+6B | 11:00:00 | 213
+6B | 10:00:00 | 936
+6B | 09:16:00 | 32
+6B | 09:00:00 | 58120
+6B | 08:00:00 | 58237
+6B | 03:00:00 | 1
+6B | 01:00:00 | 329
+6B | 00:00:00 | 10
+6C | 15:00:00 | 64706
+6C | 14:00:00 | 104
+6C | 13:00:00 | 3281
+6C | 12:00:00 | 8
+6C | 11:00:00 | 8
+6C | 10:00:00 | 112642
+6C | 09:00:00 | 232
+6C | 08:00:00 | 344797
+6C | 01:00:00 | 2
+6D | 20:14:00 | 1
+6D | 15:00:00 | 75698
+6D | 14:00:00 | 5019
+6D | 13:00:00 | 12599
+6D | 11:00:00 | 31
+6D | 10:00:00 | 104933
+6D | 09:00:00 | 141
+6D | 08:10:00 | 40
+6D | 08:00:00 | 543447
+6D | 05:00:00 | 9
+6D | 03:00:00 | 12
+6D | 01:10:00 | 2
+6D | 01:00:00 | 15
+CNVCRT | 18:00:00 | 2
+CNVCRT | 15:00:00 | 495735
+CNVCRT | 13:00:00 | 45448
+CNVCRT | 10:00:00 | 37206
+CNVCRT | 08:00:00 | 562917
+CNVCRT | 03:00:00 | 163
+CNVCRT | 01:00:00 | 5
+JAIL | 15:00:00 | 28
+JAIL | 13:00:00 | 2
+JAIL | 10:00:00 | 16
+JAIL | 08:00:00 | 43
+JRYASM | 13:00:00 | 1
+JRYASM | 11:00:00 | 432681
+MIX | 15:00:00 | 20568
+MIX | 13:00:00 | 793
+MIX | 10:00:00 | 776
+MIX | 08:00:00 | 13027
+MIX | 03:15:00 | 27
+MIX | 03:00:00 | 5
+MIX | 01:50:00 | 7
+
+
+
+
+
+
+
+
+
+
 
 
 #### Duplicate Violation Descriptions
+
+Some violations have the same exact description but different identifiers...
 
 ```` sql
 SELECT
@@ -103,6 +413,44 @@ WHEN APP. FOR PERMIT REQ. | 2 | A.103.1,  103.1
 DRIVNG ON HIWY CLOSD TO PUBLIC | 2 | 40-6-26.B,  40-6-26(B)
 FAILURE TO STOP FOR STOP SIGN | 2 | 40-6-72.B,  40-6-72(B)
 
+Some violations most likely refer to the same thing, but are worded differently (e.g. `'FAILURE TO YIELD TO PEDESTRIAN AT CROSSWALK'` vs `'YTD TO PEDESTRIAN IN CROSSWALK'`).
+
+
+#### Violation Categories
+
+> NOTE: categorization is in progress ... https://github.com/kuanb/atl_zoink/issues/9
+
+```` sql
+/*
+SELECT description FROM violations WHERE description LIKE '%ZONING%' ORDER BY description;
+*/
+
+SELECT *
+FROM (
+  SELECT
+    -- v.id AS violation_id
+    -- ,v.guid AS violation_guid
+    v.description AS violation_description
+    ,CASE
+      WHEN v.description = 'ZONING VIOLATION'
+        THEN 'HOUSING AND BUSINESS'
+      WHEN v.description LIKE '%YIELD%'
+        OR v.description = 'YTD TO PEDESTRIAN IN CROSSWALK'
+        OR v.description = 'PARKING OF COMMERCIAL TRLR PROHIBITED IN CERTAIN ZONING DISTRICTS'
+        THEN 'DRIVING'
+      WHEN v.description = 'PEDESTRIAN DARTING OUT IN TRAFFIC'
+        OR v.description = 'PEDESTRIAN OBSTRUCTING TRAFFIC'
+        OR v.description = 'FAILURE TO YIELD TO PEDESTRIAN AT CROSSWALK'
+        THEN 'PEDESTRIANISM'
+
+
+      ELSE 'TODO'
+    END violation_category
+  FROM violations v
+  ORDER BY violation_category, violation_description DESC
+) categorizations
+WHERE violation_category = 'TODO'
+````
 
 
 
@@ -123,6 +471,79 @@ FAILURE TO STOP FOR STOP SIGN | 2 | 40-6-72.B,  40-6-72(B)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+> STOP READING HERE FOR NOW.
+
+<hr>
+<hr>
+<hr>
+<hr>
 <hr>
 
 ## Data Transformation
