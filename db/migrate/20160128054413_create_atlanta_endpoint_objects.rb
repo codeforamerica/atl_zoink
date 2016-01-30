@@ -15,5 +15,9 @@ class CreateAtlantaEndpointObjects < ActiveRecord::Migration
     end
 
     add_index :atlanta_endpoint_objects, :endpoint_id
+    #add_index :atlanta_endpoint_objects, :guid
+    #add_index :atlanta_endpoint_objects, :defendant
+    #add_index :atlanta_endpoint_objects, :payable
+    #add_index :atlanta_endpoint_objects, :violation
   end
 end
