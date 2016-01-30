@@ -1,9 +1,18 @@
 class AtlantaDataExtractionProcess
+  OFFENDING_CHAR = "\xA0".force_encoding("ASCII-8BIT")
+
+  def self.cleanse(str)
+    str = str.try(:gsub, OFFENDING_CHAR, "")
+    str = str.try(:gsub, "'", "???")
+    str = str.try(:encode, "UTF-8")
+  end
+
   def self.perform
     endpoints = Rails.env == "test" ? AtlantaEndpoint.extraction_testworthy : AtlantaEndpoint.extraction_eligible
     endpoints = endpoints.order(:upload_date => :desc)
     puts "EXTRACTING DATA FROM #{endpoints.count} ENDPOINTS ..."
 
+    global_row_counter = 0
     endpoints.each do |endpoint|
       puts endpoint.url
       requested_at = Time.zone.now
@@ -19,7 +28,7 @@ class AtlantaDataExtractionProcess
         })
 
         unless rows.empty?
-          puts "FOUND #{rows.count} ROWS ..."
+          puts "... FOUND #{rows.count} ROWS." unless Rails.env.production?
 
           rows.each do |row| # ["04-AUG-14", "PRICE, ROBERT ALAN", "REGINA DR", "6C", "03:00:00 PM", "4707082", "40-6-48", "FAILURE TO MAINTAIN LANE", "1"]
             inserts << "(
@@ -51,22 +60,10 @@ class AtlantaDataExtractionProcess
         :row_count => rows.try(:count),
         :extracted_at => extracted_at,
       })
+
+      global_row_counter += (rows.try(:count) || 0)
     end
 
-    puts "EXTRACTED XXX ROWS FROM #{endpoints.count} ENDPOINTS ..."
-  end
-
-  OFFENDING_CHAR = "\xA0".force_encoding("ASCII-8BIT")
-
-  def self.cleanse(str)
-    str = str.try(:gsub, OFFENDING_CHAR, "")
-
-    begin
-      str = str.try(:encode, "UTF-8")
-    rescue Encoding::UndefinedConversionError => e
-      binding.pry
-    end
-
-    str = str.try(:gsub, "'", "???")
+    puts "EXTRACTED #{global_row_counter} ROWS FROM #{endpoints.count} ENDPOINTS ..."
   end
 end

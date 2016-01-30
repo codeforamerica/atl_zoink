@@ -29,8 +29,6 @@ RSpec.describe AtlantaDataExtractionProcess do
       AtlantaDataExtractionProcess.perform
       expected_row_count = AtlantaEndpoint.responded_with_code(200).extracted.sum(:row_count)
       expect(AtlantaEndpointObject.count).to eql(expected_row_count)
-      #binding.pry
-      #expect(AtlantaEndpointObject.count).to be > 5000 # this is kind of lame...
     end
 
     ###it "should only attempt to extract data from eligible endpoints." do
@@ -52,6 +50,7 @@ RSpec.describe AtlantaDataExtractionProcess do
         # should avoid ActiveRecord::StatementInvalid: PG::CharacterNotInRepertoire: ERROR:  invalid byte sequence for encoding 'UTF8': 0xa0
         expect{performance}.to_not raise_error
         expect{performance}.to_not raise_error(/PG::CharacterNotInRepertoire/)
+        expect(AtlantaEndpoint.malencoded.first.rows.count).to be > 0
       end
     end
   end
