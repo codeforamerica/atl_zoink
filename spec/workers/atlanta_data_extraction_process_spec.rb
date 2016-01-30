@@ -39,7 +39,7 @@ RSpec.describe AtlantaDataExtractionProcess do
 
     context "when the csv string contains zero rows" do
       it "should not throw the error ActiveRecord::StatementInvalid: PG::SyntaxError: ERROR:  syntax error at end of input" do
-        expect(AtlantaDataExtractionProcess.perform).to_not raise_error(ActiveRecord::StatementInvalid)
+        expect{AtlantaDataExtractionProcess.perform}.to_not raise_error(ActiveRecord::StatementInvalid)
       end
     end
 

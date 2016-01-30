@@ -18,35 +18,29 @@ class AtlantaDataExtractionProcess
           :encoding => response.body.encoding.to_s # should be able to read "ASCII-8BIT" characters like "\xA0"
         })
 
-        #unless rows.empty?
-        #end
-        puts "FOUND #{rows.count} ROWS ..."
+        unless rows.empty?
+          puts "FOUND #{rows.count} ROWS ..."
 
-        rows.each do |row| # ["04-AUG-14", "PRICE, ROBERT ALAN", "REGINA DR", "6C", "03:00:00 PM", "4707082", "40-6-48", "FAILURE TO MAINTAIN LANE", "1"]
-          inserts << "(
-            #{endpoint.id},
-            '#{cleanse(row[0])}',
-            '#{cleanse(row[1])}',
-            '#{cleanse(row[2])}',
-            '#{cleanse(row[3])}',
-            '#{cleanse(row[4])}',
-            '#{cleanse(row[5])}',
-            '#{cleanse(row[6])}',
-            '#{cleanse(row[7])}',
-            '#{cleanse(row[8])}'
-          )"
-        end
+          rows.each do |row| # ["04-AUG-14", "PRICE, ROBERT ALAN", "REGINA DR", "6C", "03:00:00 PM", "4707082", "40-6-48", "FAILURE TO MAINTAIN LANE", "1"]
+            inserts << "(
+              #{endpoint.id},
+              '#{cleanse(row[0])}',
+              '#{cleanse(row[1])}',
+              '#{cleanse(row[2])}',
+              '#{cleanse(row[3])}',
+              '#{cleanse(row[4])}',
+              '#{cleanse(row[5])}',
+              '#{cleanse(row[6])}',
+              '#{cleanse(row[7])}',
+              '#{cleanse(row[8])}'
+            )"
+          end
 
-        sql_string = "INSERT INTO atlanta_endpoint_objects (endpoint_id, date, defendant, location, room, time, guid, violation, description, payable) VALUES #{inserts.join(', ')}"
+          sql_string = "INSERT INTO atlanta_endpoint_objects (endpoint_id, date, defendant, location, room, time, guid, violation, description, payable) VALUES #{inserts.join(', ')}"
 
-        #begin
           ActiveRecord::Base.connection.execute(sql_string)
-        #rescue => e
-        #  puts "#{e.class} -- #{e.message}"
-        #  binding.pry unless Rails.env == "production"
-        #end
-
-        extracted_at = Time.zone.now
+        end
+        extracted_at = Time.zone.now # should consider extracted even if zero rows to prevent future extraction attempts.
       end
 
       endpoint.update!({

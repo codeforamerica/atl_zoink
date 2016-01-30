@@ -36,3 +36,4 @@
   + http://stackoverflow.com/questions/21138207/activerecordstatementinvalid-pg-infailedsqltransaction/22383251#22383251
   + https://relishapp.com/rspec/rspec-rails/docs/transactions
   + https://devcenter.heroku.com/articles/git#deploying-code
+  + http://stackoverflow.com/questions/19960831/rspec-expect-vs-expect-with-block-whats-the-difference
