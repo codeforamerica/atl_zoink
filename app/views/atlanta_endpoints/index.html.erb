@@ -1,0 +1,32 @@
+<h1>Courtbot Reporter</h1>
+
+<p class="lead"><%= @message %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Courtbot name</th>
+      <th>Upload date</th>
+      <th>Requested at</th>
+      <th>Response received at</th>
+      <th>Response code</th>
+      <th>String encoding</th>
+      <th>Row count</th>
+      <th>Extracted at</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @endpoints.each do |endpoint| %>
+    <tr>
+      <td>Atlanta</td>
+      <td><%= endpoint.upload_date %></td>
+      <td><%= endpoint.requested_at %></td>
+      <td><%= endpoint.response_received_at %></td>
+      <td><%= endpoint.response_code %></td>
+      <td><%= endpoint.string_encoding %></td>
+      <td><%= endpoint.row_count %></td>
+      <td><%= endpoint.extracted_at %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

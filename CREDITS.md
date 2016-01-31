@@ -27,3 +27,15 @@
   + http://kb.tableau.com/articles/knowledgebase/top-n-and-others-sets
   + http://www.mattboldt.com/heroku-staging-production-environments/
   + https://help.github.com/articles/renaming-a-remote/
+  + http://stackoverflow.com/questions/1819614/how-do-i-globally-configure-rspec-to-keep-the-color-and-format-specdoc-o
+  + http://stackoverflow.com/questions/14890375/rspec-how-could-i-use-the-array-include-matcher-in-the-expect-syntax
+  + http://betterspecs.org/
+  + http://stackoverflow.com/questions/31562040/git-rebase-i-does-nothing
+  + https://www.coffeepowered.net/2009/01/23/mass-inserting-data-in-rails-without-killing-your-performance/
+  + https://bluerogue251.wordpress.com/2014/03/13/activerecordstatementinvalid-pginfailedsqltransaction/
+  + http://stackoverflow.com/questions/21138207/activerecordstatementinvalid-pg-infailedsqltransaction/22383251#22383251
+  + https://relishapp.com/rspec/rspec-rails/docs/transactions
+  + https://devcenter.heroku.com/articles/git#deploying-code
+  + http://stackoverflow.com/questions/19960831/rspec-expect-vs-expect-with-block-whats-the-difference
+  + http://stackoverflow.com/questions/12947910/force-strings-to-utf-8-from-any-encoding
+  + http://graysoftinc.com/character-encodings/ruby-19s-string
