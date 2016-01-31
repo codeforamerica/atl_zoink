@@ -1,4 +1,6 @@
 class AtlantaEndpoint < ActiveRecord::Base
+  has_many :rows, :class_name => AtlantaEndpointObject, :inverse_of => :endpoint, :foreign_key => :endpoint_id
+
   EARLIEST_POSSIBLE_UPLOAD_DATE = "2014-01-01".to_date
 
   def self.latest_possible_upload_date
@@ -31,6 +33,10 @@ class AtlantaEndpoint < ActiveRecord::Base
 
   def self.extracted
     where("extracted_at IS NOT NULL")
+  end
+
+  def self.malencoded
+    where("string_encoding <> 'UTF-8'")
   end
 
   # @example "20012014"
