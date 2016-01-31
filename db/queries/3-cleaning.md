@@ -4,7 +4,9 @@
 
 ### Multiple Violation Codes per Violation Description
 
-Some violations have the same exact description but different identifiers...
+Some violations most likely refer to the same thing, but are worded differently (e.g. `'FAILURE TO YIELD TO PEDESTRIAN AT CROSSWALK'` vs `'YTD TO PEDESTRIAN IN CROSSWALK'`). Are these data integrity issues or truly different violations?
+
+Some violations have the same exact description but different codes...
 
 ```` sql
 SELECT
@@ -37,4 +39,6 @@ WHEN APP. FOR PERMIT REQ. | 2 | A.103.1,  103.1
 DRIVNG ON HIWY CLOSD TO PUBLIC | 2 | 40-6-26.B,  40-6-26(B)
 FAILURE TO STOP FOR STOP SIGN | 2 | 40-6-72.B,  40-6-72(B)
 
-Some violations most likely refer to the same thing, but are worded differently (e.g. `'FAILURE TO YIELD TO PEDESTRIAN AT CROSSWALK'` vs `'YTD TO PEDESTRIAN IN CROSSWALK'`).
+... so which signify data integrity issues, and which (if any) signify different severity levels  for the same violation?
+
+Violations need unique codes, and data capture processes need to perform proper violation code and description validations.

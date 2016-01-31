@@ -1,5 +1,7 @@
 # Queries
 
+> NOTE: these queries were written against a preliminary schema and are likely to change once a new schema is adopted.
+
 ## Reporting and Visualizations
 
 ```` sql

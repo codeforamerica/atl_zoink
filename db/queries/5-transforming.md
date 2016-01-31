@@ -4,6 +4,7 @@
 
 
 ```` sql
+-- combining appointment/hearing/court date and time 
 SELECT
   r.id AS row_id
   ,r.endpoint_id

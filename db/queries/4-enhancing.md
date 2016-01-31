@@ -2,9 +2,11 @@
 
 ## Enhancements
 
+> NOTE: these queries were written against a preliminary schema and are likely to change once a new schema is adopted.
+
 ### Categorizing Violations
 
-> NOTE: categorization is in progress ... https://github.com/kuanb/atl_zoink/issues/9
+> NOTE: violation categorization is in progress ... https://github.com/kuanb/atl_zoink/issues/9
 
 ```` sql
 /*
