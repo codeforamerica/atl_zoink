@@ -13,9 +13,9 @@ class Api::V0::ApiController < ApplicationController
   #   {"violation_name": "SPEEDING 19 to 23 MPH OVER", "citation_count": 20}
   # ]
   def top_violations
-    limit = params[:limit]
-    limit = limit.try(:to_i)  # block sql-injection by converting (malicious) strings to zeros
-    limit = 50 if limit <= 0 # ... then convert zeros and negative numbers to a default value
+    default_limit = 50
+    limit = params[:limit].try(:to_i) || default_limit # block sql-injection by converting (malicious) strings to zeros ...
+    limit = default_limit if limit <= 0
 
     query_string =<<-SQL
       SELECT
