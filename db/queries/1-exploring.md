@@ -265,7 +265,8 @@ E01954203 | 40-6-48 | FAILURE TO MAINTAIN LANE | 15
 E01954203 | 40-6-49 | FOLLOWING TOO CLOSELY | 15
 E01954203 | 40-8-76.1 | SAFETY BELT VIOLATION | 15
 
-... these results feel like genuine representations of multiple violations per citation, especially in the case of the hit-and-run/car chase GUIDs represented towards the bottom of the sample. Plus this [line of code](https://github.com/codeforamerica/courtbot/blob/master/utils/loaddata.js#L75) in ATL courtbot suggests multiple "citations" per "case".
+... these results feel like genuine representations of multiple violations per citation, especially in the case of the hit-and-run/car chase GUIDs represented towards the bottom of the sample.
+
 
 
 
@@ -349,3 +350,117 @@ guid | location | location_count
 ... a good portion look like typos and/or spelling variations and/or different levels of specificity, but the question still remains - "may a citation have multiple locations or only one?"
 
 Either way this data is dirty and needs proper location validation or auto lat/long assignment via GPS.
+
+#### Multiple Payables per GUID
+
+```` sql
+-- how many guid values have more than one payable?
+SELECT count(DISTINCT guid)
+FROM (
+  SELECT
+    r.guid
+    ,count(DISTINCT payable) AS location_count
+  FROM atlanta_endpoint_objects r
+  GROUP BY 1
+  HAVING count(DISTINCT payable) > 1
+  ORDER BY 2 DESC
+) dups; -- > 4,556 / 407,118 * 100 = 1.1%
+````
+
+#### Multiple Payables per Violation
+
+If `payable` does not describe `guid`, does it describe `violation`?
+
+```` sql
+SELECT
+ violation
+ ,description
+ ,count(DISTINCT payable) AS payable_count
+FROM atlanta_endpoint_objects
+GROUP BY 1, 2
+HAVING count(DISTINCT payable) > 1
+ORDER BY 3 desc
+````
+
+=>
+
+violation | description | payable_count
+--- | --- | ---
+40-6-184A | SPEED LESS THAN MINIMUM MOVING VIOLATION | 2
+40-6-184C | IMPEDING TRAFFIC FLOW-LEFT LANE VIOLATION | 2
+40-8-76 | FAIL/USE CHILD SEAT/SEAT BELT | 2
+40-6-43 | IMPR PASSING ON THE RIGHT | 2
+40-6-126 | CENTER LANE VIOLATION | 2
+10-8 | DRINKING IN PUBLIC | 2
+40-6-241 | IMPROPER USE OF RADIO AND MOBILE | 2
+40-6-203(A)(1)(B) | PARKING ON SIDEWALK | 2
+40-6-241.2(B) | TEXTING WHILE DRIVING PROHIBITED (OVER 18) | 2
+40-6-203(A)(1)(C) | PARKING WITHIN INTERSECTION | 2
+40-6-52(B) | TRUCKS USING MULTILANE HIGHWAY (3+ LANES) | 2
+40-6-203(A)(1)(D) | PARKING ON CROSSWALK | 2
+40-6-45(A)1 | PASSING ON HILL OR CURVE | 2
+40-6-92 | PED CROSS NOT A CROSSWALK/JAY WALKING | 2
+40-6-92(A) | YIELD WHILE CROSSING ROADWAY | 2
+40-6-203(A)(1)(E) | PARKING TO CLOSE TO SAFETY ZONE | 2
+40-6-92(C) | CROSSING ELSEWHERE THAN CROSS | 2
+40-6-202 | S/S OR PARKING OUTSIDE BUS/RES-BLOCKING ST. | 2
+40-6-203(A)(1)(G) | STOPPING ON BRIDGE/TUNNEL | 2
+40-6-16 | GA MOVE OVER LAW | 2
+40-6-203(A)(1)(I) | PARKING ON CONTROL ACCESS (INTERSTATE) HWY | 2
+40-6-203(A)(1)(K) | PARKING PROHIBITED (SIGNS PROHIBITED) | 2
+40-6-203(A)(2)(A) | BLOCKING PUBLIC/PRIVATE DRIVEWAY | 2
+40-6-203(A)(2)(B) | PARKING WITHIN 15 FEET OF FIRE HYDRANT | 2
+40-6-49 | FOLLOWING TOO CLOSELY | 2
+40-6-203(A)(2)(C) | PARKING WITHIN 20 FEET OF CROSSWALK AT INTERSECTION | 2
+40-6-144 | FAILURE TO YLD ENTERING STREET | 2
+40-6-254 | FAILURE TO SECURE LOAD | 2
+40-6-200 | IMPROPER PARKING | 2
+40-6-50 | DRIVING IN EMERGENCY LANE/GORE | 2
+40-6-200(A) | VEH. STOPPED/PRK ON 2-WAY RDWY | 2
+40-6-74 | FAIL TO YLD RIGHT OF WAY FOR EMERGENCY VEH | 2
+40-6-74.A | FAIL TO YIELD FOR EMERGENCY VEHICLES | 2
+40-8-22 | IMPROPERLY WORKING HEADLIGHTS | 2
+40-6-74(A) | FAIL TO YLD FOR EMGCY VEHCLS | 2
+40-8-22(D) | MATERIAL COVERING HEADLIGHTS ARE PROHIBITED | 2
+40-6-226(A) | HANDICAP PARKING- PERMIT NOT DISPLAYED | 2
+40-6-74(B) | UNSAFE OPERATION OF EMERGENCY VEHICLE | 2
+
+... nope.
+
+#### Multiple Payables per Hearing
+
+If `payable` does not describe `guid` or `violation`, does it describe the hearing?
+
+```` sql
+SELECT
+ room ,DATE ,TIME
+ ,defendant
+ ,count(DISTINCT payable) AS payable_count
+FROM atlanta_endpoint_objects
+GROUP BY 1, 2,3 ,4
+HAVING count(DISTINCT payable) > 1
+ORDER BY 5,4 desc;
+````
+
+... nope.
+
+#### What does payable describe?
+
+Even though the data shows multiple `payable` values per `guid`, [this courtbot code](https://github.com/codeforamerica/courtbot/blob/4e861d4066ab1d56797f7c1e9b9d20900cbd4ee7/web.js#L120)
+ suggests there should only be one payable per citation, and that a hearing is payable if all component citations are payable.
+
+#### Multiple Citations per Case
+
+Additional Context from http://ditweb.atlantaga.gov/mcw/:
+
+Case Number	| Citation	| Defendant	 | Last Known City	| Violation Code	| Violation Code Description
+---	| ---	| ---	 | ---	| ---	| ---
+15TR138716	| 5060184	| ABERNATHY, TEREANCE	| JACKSONVILLE, AL	| 40-5-121	| DRIVE W/LICENSE SUSP/REVOKED
+15TR138716	| 5060185	| ABERNATHY, TEREANCE	| JACKSONVILLE, AL	| 40-6-250	| OPERATING A VEHICLE WHILE WEARING HEADPHONES
+15TR138716	| 5060186	| ABERNATHY, TEREANCE	| JACKSONVILLE, AL	| 40-8-74	  | UNSAFE TIRES
+
+
+The case number is nowhere to be found in the data but the citation number matches a GUID belonging to the defendant.
+
+This evidence, along with [this line of courtbot code](https://github.com/codeforamerica/courtbot/blob/master/utils/loaddata.js#L75),
+  suggest there are multiple citations per court case, and that GUIDs are citation identifiers.
