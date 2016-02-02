@@ -39,3 +39,4 @@
   + http://stackoverflow.com/questions/19960831/rspec-expect-vs-expect-with-block-whats-the-difference
   + http://stackoverflow.com/questions/12947910/force-strings-to-utf-8-from-any-encoding
   + http://graysoftinc.com/character-encodings/ruby-19s-string
+  + http://stackoverflow.com/questions/24906826/how-to-get-result-from-string-agg-with-a-proper-order-by
