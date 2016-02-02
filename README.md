@@ -5,6 +5,38 @@ Performs ETL on data from any and all Courtbot APIs, then produces insights and 
 Currently-supported Courtbots include:
   + [Courtbot - Atlanta](https://github.com/codeforamerica/courtbot)
 
+## Usage
+
+[View](https://courtbot-reporter.herokuapp.com/) the application in a browser and/or request JSON data from the API.
+
+### API Endpoints
+
+#### Top Violations
+
+Returns summary statistics for the statutes which have been cited the most.
+
+ + `/api/v0/top-violations.json`
+ + `/api/v0/top-violations.json?limit=3`
+
+```` json
+[
+  {"violation_id":"2","violation_guid":"ATL 40-6-20","violation_name":"FAIL TO OBEY TRAF CTRL DEVICE","violation_category":"TODO","citation_count":"8804"},
+  {"violation_id":"20","violation_guid":"ATL 40-2-8","violation_name":"NO TAG/ NO DECAL","violation_category":"TODO","citation_count":"5654"},
+  {"violation_id":"9","violation_guid":"ATL 40-8-76.1","violation_name":"SAFETY BELT VIOLATION","violation_category":"TODO","citation_count":"3777"}
+]
+
+````
+
+
+
+
+
+
+
+
+
+
+
 ## Contributing
 
 ### Installation
@@ -45,8 +77,6 @@ Migrate database.
 bundle exec rake db:migrate
 ````
 
-### Usage
-
 Detect all possible Courtbot API endpoints.
 
 ```` sh
@@ -58,7 +88,6 @@ Extract .csv data from eligible Courtbot API endpoints.
 ```` sh
 bundle exec rake atlanta:extract
 ````
-
 
 
 
@@ -104,3 +133,18 @@ git push heroku-production master
 ````
 
 Visit the application live at https://courtbot-reporter.herokuapp.com/.
+
+### Maintenance
+
+Initiate a new PG Backup from the Heroku Postgres console and click "Download" when it's ready.
+
+Restore production database on local machine.
+
+```` sh
+psql
+DROP DATABASE IF EXISTS courtbot_reporter_snapshot;
+CREATE DATABASE courtbot_reporter_snapshot;
+\q
+
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -U courtbot_reporter -d courtbot_reporter_snapshot latest.dump
+````

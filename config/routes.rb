@@ -9,6 +9,19 @@ Rails.application.routes.draw do
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
+  get 'data_sources' => 'atlanta_endpoints#index', :as => 'data_sources'
+
+  get 'charts' => 'charts#index', :as => 'charts'
+  get 'charts/top-violations' => 'charts#top_violations', :as => 'top_violations_chart'
+
+  get 'data_standards' => 'data_standards#index', :as => 'data_standards'
+
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v0 do
+      get 'top-violations' => 'api#top_violations'
+    end
+  end
+
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 

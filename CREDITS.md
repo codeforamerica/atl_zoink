@@ -36,6 +36,9 @@
   + http://stackoverflow.com/questions/21138207/activerecordstatementinvalid-pg-infailedsqltransaction/22383251#22383251
   + https://relishapp.com/rspec/rspec-rails/docs/transactions
   + https://devcenter.heroku.com/articles/git#deploying-code
+  + http://stackoverflow.com/questions/1078347/is-there-a-rails-trick-to-adding-commas-to-large-numbers
+  + http://stackoverflow.com/questions/22943892/actioncontrollerunknownformat
   + http://stackoverflow.com/questions/19960831/rspec-expect-vs-expect-with-block-whats-the-difference
   + http://stackoverflow.com/questions/12947910/force-strings-to-utf-8-from-any-encoding
   + http://graysoftinc.com/character-encodings/ruby-19s-string
+  + http://stackoverflow.com/questions/8637857/generate-id-row-for-a-view-with-grouping
