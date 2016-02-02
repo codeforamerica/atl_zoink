@@ -8,11 +8,13 @@ RSpec.describe AtlantaTransformationProcess do
   let(:appointment_time){"03:00:00 PM"}
   let(:appointment_at){"2015-01-20T15:00:00+00:00"}
 
-  before do
-    #AtlantaEndpointDetectionProcess.perform
-    #AtlantaDataExtractionProcess.perform
-    #AtlantaDeduplicationProcess.perform
-    AtlantaTransformationProcess.perform
+  before do |example|
+    unless example.metadata[:skip_before]
+      #AtlantaEndpointDetectionProcess.perform
+      #AtlantaDataExtractionProcess.perform
+      #AtlantaDeduplicationProcess.perform
+      AtlantaTransformationProcess.perform
+    end
   end
 
   describe ".perform" do
@@ -35,7 +37,7 @@ RSpec.describe AtlantaTransformationProcess do
     end
 
     it "should transform separate date and time fields into a single datetime.", :skip_before => true do
-      expect(DateTime.parse("#{appointment_date} #{appointment_time}").to_s).to eql(appointment_datetime)
+      expect(DateTime.parse("#{appointment_date} #{appointment_time}").to_s).to eql(appointment_at)
     end
 
     it "should transform rows in chronological order to acheive the desired attribute update behavior (more current values overwrite old values)." do

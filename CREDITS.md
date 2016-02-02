@@ -43,3 +43,5 @@
   + http://stackoverflow.com/questions/6214144/ruby-convert-string-to-date
   + http://stackoverflow.com/questions/753919/run-a-single-migration-file
   + https://github.com/jfelchner/ruby-progressbar/wiki/Options
+  + https://coderwall.com/p/_yrafw/skipping-before-hook-for-a-few-test-cases-in-rspec
+  + http://stackoverflow.com/questions/7743039/killing-abandoned-process-on-heroku
