@@ -10,6 +10,11 @@ namespace :atlanta do
     AtlantaDataExtractionProcess.perform
   end
 
+  desc "Deduplicate Atlanta data into distinct rows."
+  task :deduplicate => :extract do
+    AtlantaDeduplicationProcess.perform
+  end
+
   ###desc "Extract, transform, and load data from the Atlanta Courtbot API."
   ###task :etl => :environment do
   ###  AtlantaEtlProcess.perform
