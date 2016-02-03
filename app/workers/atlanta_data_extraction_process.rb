@@ -8,7 +8,7 @@ class AtlantaDataExtractionProcess
   end
 
   def self.perform
-    endpoints = Rails.env == "test" ? AtlantaEndpoint.extraction_testworthy : AtlantaEndpoint.extraction_eligible
+    endpoints = Rails.env.production? ? AtlantaEndpoint.extraction_eligible : AtlantaEndpoint.extraction_testworthy
     endpoints = endpoints.order(:upload_date => :desc)
     puts "EXTRACTING DATA FROM #{endpoints.count} ENDPOINTS ..."
 

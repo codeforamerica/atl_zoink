@@ -36,6 +36,8 @@
   + http://stackoverflow.com/questions/21138207/activerecordstatementinvalid-pg-infailedsqltransaction/22383251#22383251
   + https://relishapp.com/rspec/rspec-rails/docs/transactions
   + https://devcenter.heroku.com/articles/git#deploying-code
+  + http://stackoverflow.com/questions/1078347/is-there-a-rails-trick-to-adding-commas-to-large-numbers
+  + http://stackoverflow.com/questions/22943892/actioncontrollerunknownformat
   + http://stackoverflow.com/questions/19960831/rspec-expect-vs-expect-with-block-whats-the-difference
   + http://stackoverflow.com/questions/12947910/force-strings-to-utf-8-from-any-encoding
   + http://graysoftinc.com/character-encodings/ruby-19s-string
@@ -45,3 +47,7 @@
   + https://github.com/jfelchner/ruby-progressbar/wiki/Options
   + https://coderwall.com/p/_yrafw/skipping-before-hook-for-a-few-test-cases-in-rspec
   + http://stackoverflow.com/questions/7743039/killing-abandoned-process-on-heroku
+  + http://www.w3schools.com/jsref/jsref_concat_array.asp
+  + http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/highcharts/tooltip/formatter-simple/
+  + http://stackoverflow.com/questions/5731193/how-to-format-numbers-using-javascript
+  + http://api.highcharts.com/highcharts#plotOptions.series.dataLabels

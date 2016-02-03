@@ -1,0 +1,91 @@
+<div id="chart-container"> <%= @loading_message %></div>
+
+<% content_for(:js_footer) do %>
+<script type="text/javascript">
+
+    function number_with_thousands_separators(int){
+        return (int).toLocaleString('en-US', {minimumFractionDigits: 0})
+    } // todo: share this across charts
+
+    var request_url = "/api/v0/top-violations.json?limit=15" // the chart will only reasonably display around 15 bars without hiding some bar labels, which has the effect of making the chart misleading
+
+    d3.json(request_url, function(error, response){
+        console.log(response.length)
+        console.log(response)
+        console.log(response[0])
+
+        //debugger;
+
+        var data_categories = response.map(function(row){ return row["violation_description"] })
+        var data_points = response.map(function(row){ return parseInt(row["citation_count"]) })
+
+        var data_series = [{
+            name: 'ATL',
+            data: data_points, // [635, 203, 107, 31, 20],
+            color: 'steelblue'
+        }]
+
+        $('#chart-container').highcharts({
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Top Violations'
+            },
+            //subtitle: {
+            //    text: 'the most-cited violations'
+            //},
+            xAxis: {
+                categories: data_categories,
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Distinct cout of citation_id',
+                    align: 'middle' // 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                valueSuffix: ' citations'
+                //formatter: function(){
+                //    return number_with_thousands_separators(this.y)
+                //}
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function(){
+                            return number_with_thousands_separators(this.y)
+                        }
+                    }
+                }
+            },
+            legend: {
+                //enabled:false,
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                x: -40,
+                y: 80,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+                shadow: true
+            },
+            credits: {
+                enabled: true
+            },
+            series: data_series
+        }); // highcharts()
+
+    }); // d3.json()
+
+</script>
+<% end %>
