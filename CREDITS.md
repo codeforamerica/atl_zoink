@@ -52,3 +52,4 @@
   + http://stackoverflow.com/questions/5731193/how-to-format-numbers-using-javascript
   + http://api.highcharts.com/highcharts#plotOptions.series.dataLabels
   + http://getbootstrap.com/css/#tables
+  + http://getbootstrap.com/components/#navbar-fixed-top

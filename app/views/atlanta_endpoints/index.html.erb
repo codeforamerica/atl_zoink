@@ -29,7 +29,10 @@
         <td><%= endpoint.response_received_at %></td>
         <td>
         <% if endpoint.response_code == 200 %>
-          <%= link_to endpoint.response_code, endpoint.url, class: "btn btn-primary" %>
+          <%= link_to endpoint.url, class: "btn btn-success" do %>
+            <%= endpoint.response_code %>
+            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+          <% end %>
         <% else %>
           <%= endpoint.response_code %>
         <% end %>

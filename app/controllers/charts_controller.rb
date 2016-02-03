@@ -1,5 +1,5 @@
 class ChartsController < ApplicationController
-  LOADING_MESSAGE = " ... loading ... loading ... this might take a few seconds :-)"
+  LOADING_MESSAGE = " ... loading ... this might take a few seconds :-)"
 
   def index
     #code
