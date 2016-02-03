@@ -1,8 +1,6 @@
 <div id="chart-container"></div>
 
-<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<!--script src="https://code.jquery.com/jquery-2.1.4.min.js"></script-->
-<script src="http://code.highcharts.com/highcharts.js"></script>
+<% content_for(:js_footer) do %>
 <script type="text/javascript">
 
     var request_url = "/api/v0/top-violations.json?limit=15" // the chart will only reasonably display around 15 bars without hiding some bar labels, which has the effect of making the chart misleading
@@ -28,7 +26,7 @@
                 type: 'bar'
             },
             title: {
-                text: 'Violations Most-cited'
+                text: 'Top Violations'
             },
             //subtitle: {
             //    text: 'the most-cited violations'
@@ -80,3 +78,4 @@
     }); // d3.json()
 
 </script>
+<% end %>

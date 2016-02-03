@@ -10,15 +10,16 @@ Rails.application.routes.draw do
   #   get 'products/:id' => 'catalog#view'
 
   get 'data_sources' => 'atlanta_endpoints#index', :as => 'data_sources'
+  get 'data_standards' => 'data_standards#index', :as => 'data_standards'
 
   get 'charts' => 'charts#index', :as => 'charts'
   get 'charts/top-violations' => 'charts#top_violations', :as => 'top_violations_chart'
-
-  get 'data_standards' => 'data_standards#index', :as => 'data_standards'
+  get 'charts/citations-per-defendant' => 'charts#citations_per_defendant', :as => 'citations_per_defendant_chart'
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v0 do
       get 'top-violations' => 'api#top_violations'
+      get 'citations-per-defendant' => 'api#citations_per_defendant'
     end
   end
 

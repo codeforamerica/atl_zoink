@@ -32,4 +32,13 @@ class Api::V0::ApiController < ApplicationController
       format.json { render json: @violations }
     end
   end
+
+
+  def citations_per_defendant
+    @citation_distributions = [{"1":100000,"2":40000,"3":15000,"4":6000,"5":2000,"6":700,"7":100}]
+
+    respond_to do |format|
+      format.json { render json: @citation_distributions }
+    end
+  end
 end
