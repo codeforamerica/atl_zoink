@@ -10,7 +10,7 @@
   <table class="table table-bordered table-hover table-striped">
     <thead>
       <tr>
-        <th>Courtbot name</th>
+        <th>Municipality</th>
         <th>Upload date</th>
         <th>Requested at</th>
         <th>Response received at</th>
@@ -23,7 +23,7 @@
     <tbody>
     <% @endpoints.each do |endpoint| %>
       <tr>
-        <td><a href="https://github.com/codeforamerica/courtbot">Atlanta (ATL)</a></td>
+        <td><a href="http://courtview.atlantaga.gov/">Atlanta (ATL)</a></td>
         <td><%= endpoint.upload_date %></td>
         <td><%= endpoint.requested_at %></td>
         <td><%= endpoint.response_received_at %></td>
