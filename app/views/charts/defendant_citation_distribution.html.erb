@@ -1,11 +1,13 @@
-
-
-<div id="chart-container"></div>
+<div id="chart-container"> <%= @loading_message %>  </div>
 
 <% content_for(:js_footer) do %>
 <script type="text/javascript">
 
-    d3.json("/api/v0/defendant-citation-distribution.json" , function(error, response){
+    function number_with_thousands_separators(int){
+        return (int).toLocaleString('en-US', {minimumFractionDigits: 0})
+    } // todo: share this across charts
+
+    d3.json("/api/v0/defendant-citation-distribution.json?limit=9" , function(error, response){
         console.log(response.length)
         console.log(response)
         console.log(response[0])
@@ -47,12 +49,15 @@
                 labels: {
                     formatter: function () {
                         //return this.value / 1000 + 'k';
-                        return this.value;
+                        return number_with_thousands_separators(this.value);
                     }
                 }
             },
             tooltip: {
-                pointFormat: '{point.y:,.0f} distinct defendant names have been cited {point.x} times.'
+                formatter: function(){
+                    return number_with_thousands_separators(this.y) + ' distinct defendant names have been cited ' + this.x + ' times.';
+                }
+                //pointFormat: '{point.y:,.0f} distinct defendant names have been cited {point.x} times.'
             },
             plotOptions: {
                 area: {

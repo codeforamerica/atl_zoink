@@ -48,3 +48,6 @@
   + https://coderwall.com/p/_yrafw/skipping-before-hook-for-a-few-test-cases-in-rspec
   + http://stackoverflow.com/questions/7743039/killing-abandoned-process-on-heroku
   + http://www.w3schools.com/jsref/jsref_concat_array.asp
+  + http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/highcharts/tooltip/formatter-simple/
+  + http://stackoverflow.com/questions/5731193/how-to-format-numbers-using-javascript
+  + http://api.highcharts.com/highcharts#plotOptions.series.dataLabels
