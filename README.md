@@ -1,6 +1,6 @@
 # Courtbot Reporter
 
-Performs ETL on data from any and all Courtbot APIs, then produces insights and interactive web-based data visualizations.
+Performs ETL on courtbot data, provides a JSON API, produces insights and interactive data visualizations.
 
 Currently-supported Courtbots include:
   + [Courtbot - Atlanta](https://github.com/codeforamerica/courtbot)
@@ -11,6 +11,8 @@ Currently-supported Courtbots include:
 
 ### API Endpoints
 
+See [source code](/app/controllers/api/v0/) for full documentation.
+
 #### Top Violations
 
 Returns summary statistics for the statutes which have been cited the most.
@@ -20,11 +22,10 @@ Returns summary statistics for the statutes which have been cited the most.
 
 ```` json
 [
-  {"violation_id":"2","violation_guid":"ATL 40-6-20","violation_name":"FAIL TO OBEY TRAF CTRL DEVICE","violation_category":"TODO","citation_count":"8804"},
-  {"violation_id":"20","violation_guid":"ATL 40-2-8","violation_name":"NO TAG/ NO DECAL","violation_category":"TODO","citation_count":"5654"},
-  {"violation_id":"9","violation_guid":"ATL 40-8-76.1","violation_name":"SAFETY BELT VIOLATION","violation_category":"TODO","citation_count":"3777"}
+  {"violation_id":"1", "violation_code":"40-6-20", "violation_description":"FAIL TO OBEY TRAF CTRL DEVICE", "citation_count":"3469"},
+  {"violation_id":"9", "violation_code":"40-2-8", "violation_description":"NO TAG/ NO DECAL", "citation_count":"2515"},
+  {"violation_id":"11", "violation_code":"40-8-76.1", "violation_description":"SAFETY BELT VIOLATION", "citation_count":"1960"}
 ]
-
 ````
 
 

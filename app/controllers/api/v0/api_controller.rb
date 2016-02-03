@@ -5,13 +5,7 @@ class Api::V0::ApiController < ApplicationController
   # @param params [Hash]
   # @option params [Hash] limit A positive integer number of records to return. Corresponds to a SQL LIMIT clause value. Default is 50.
   #
-  # @example [
-  #   {"violation_name": "FAILURE TO OBEY", "citation_count": 635},
-  #   {"violation_name": "URINATING IN PUBLIC", "citation_count": 203},
-  #   {"violation_name": "SAFETY BELT VIOLATION", "citation_count": 107},
-  #   {"violation_name": "FOLLOWING TOO CLOSELY", "citation_count": 31},
-  #   {"violation_name": "SPEEDING 19 to 23 MPH OVER", "citation_count": 20}
-  # ]
+  # @example [{"violation_id":"1", "violation_code":"40-6-20", "violation_description":"FAIL TO OBEY TRAF CTRL DEVICE", "citation_count":"3469"},{"violation_id":"9", "violation_code":"40-2-8", "violation_description":"NO TAG/ NO DECAL", "citation_count":"2515"},{"violation_id":"11", "violation_code":"40-8-76.1", "violation_description":"SAFETY BELT VIOLATION", "citation_count":"1960"}]
   def top_violations
     default_limit = 50
     limit = params[:limit].try(:to_i) || default_limit # block sql-injection by converting (malicious) strings to zeros ...
@@ -20,12 +14,11 @@ class Api::V0::ApiController < ApplicationController
     query_string =<<-SQL
       SELECT
         v.id AS violation_id
-        ,concat('ATL ', v.guid) AS violation_guid
-        ,v.description AS violation_name
-        ,'TODO' AS violation_category
-        ,count(DISTINCT c.id) AS citation_count
-      FROM violations v
-      JOIN citations c ON c.violation_id = v.id
+        ,v.code AS violation_code
+        ,v.description AS violation_description
+        ,count(DISTINCT cv.citation_guid) AS citation_count
+      FROM atlanta_violations v
+      JOIN atlanta_citation_violations cv ON v.code = cv.violation_code
       GROUP BY 1,2,3
       ORDER BY citation_count DESC
       LIMIT #{limit};

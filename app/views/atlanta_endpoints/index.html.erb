@@ -1,7 +1,9 @@
 <h2>Data Sources</h2>
 
 <p>
-  <%= number_with_delimiter(@row_count, :delimiter => ',') %> rows have been extracted from <%= number_with_delimiter(@extracted_endpoint_count, :delimiter => ',') %> valid urls posted by 1 courtbot.
+  Processed <%= number_with_delimiter(@row_count, :delimiter => ',') %>
+  rows from <%= number_with_delimiter(@extracted_endpoint_count, :delimiter => ',') %> valid urls
+  posted by 1 municipality.
 </p>
 
 <table>
