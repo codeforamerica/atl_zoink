@@ -14,7 +14,7 @@
 
         //debugger;
 
-        var data_categories = response.map(function(row){ return row["violation_name"] })
+        var data_categories = response.map(function(row){ return row["violation_description"] })
         var data_points = response.map(function(row){ return parseInt(row["citation_count"]) })
 
         var data_series = [{
@@ -28,11 +28,11 @@
                 type: 'bar'
             },
             title: {
-                text: 'Top Violations'
+                text: 'Violations Most-cited'
             },
-            subtitle: {
-                text: 'helpful subtitle here...'
-            },
+            //subtitle: {
+            //    text: 'the most-cited violations'
+            //},
             xAxis: {
                 categories: data_categories,
                 title: {
@@ -63,7 +63,7 @@
                 //enabled:false,
                 layout: 'vertical',
                 align: 'right',
-                verticalAlign: 'top',
+                verticalAlign: 'middle',
                 x: -40,
                 y: 80,
                 floating: true,
