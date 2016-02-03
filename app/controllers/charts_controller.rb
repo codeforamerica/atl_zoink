@@ -7,7 +7,7 @@ class ChartsController < ApplicationController
     #code
   end
 
-  def citations_per_defendant
+  def defendant_citation_distribution
     #code
   end
 end

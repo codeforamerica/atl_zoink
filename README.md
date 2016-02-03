@@ -15,7 +15,7 @@ See [source code](/app/controllers/api/v0/) for full documentation.
 
 #### Top Violations
 
-Returns summary statistics for the statutes which have been cited the most.
+Returns a list of violation codes which have been cited the most.
 
  + `/api/v0/top-violations.json`
  + `/api/v0/top-violations.json?limit=3`
@@ -25,6 +25,38 @@ Returns summary statistics for the statutes which have been cited the most.
   {"violation_id":"1", "violation_code":"40-6-20", "violation_description":"FAIL TO OBEY TRAF CTRL DEVICE", "citation_count":"3469"},
   {"violation_id":"9", "violation_code":"40-2-8", "violation_description":"NO TAG/ NO DECAL", "citation_count":"2515"},
   {"violation_id":"11", "violation_code":"40-8-76.1", "violation_description":"SAFETY BELT VIOLATION", "citation_count":"1960"}
+]
+````
+
+#### Defendant Citation Distribution
+
+Returns defendant counts per citation count.
+
+ + `/api/v0/defendant-citation-distribution.json`
+ + `/api/v0/defendant-citation-distribution.json?limit=20`
+
+```` json
+[
+  {"citation_count":"1","defendant_count":"130706"},
+  {"citation_count":"2","defendant_count":"29159"},
+  {"citation_count":"3","defendant_count":"8987"},
+  {"citation_count":"4","defendant_count":"3509"},
+  {"citation_count":"5","defendant_count":"1409"},
+  {"citation_count":"6","defendant_count":"678"},
+  {"citation_count":"7","defendant_count":"314"},
+  {"citation_count":"8","defendant_count":"170"},
+  {"citation_count":"9","defendant_count":"86"},
+  {"citation_count":"10","defendant_count":"61"},
+  {"citation_count":"11","defendant_count":"31"},
+  {"citation_count":"12","defendant_count":"19"},
+  {"citation_count":"13","defendant_count":"14"},
+  {"citation_count":"14","defendant_count":"5"},
+  {"citation_count":"15","defendant_count":"6"},
+  {"citation_count":"16","defendant_count":"2"},
+  {"citation_count":"17","defendant_count":"2"},
+  {"citation_count":"18","defendant_count":"4"},
+  {"citation_count":"19","defendant_count":"4"},
+  {"citation_count":"21","defendant_count":"1"}
 ]
 ````
 

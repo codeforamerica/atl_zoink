@@ -5,7 +5,7 @@
 <% content_for(:js_footer) do %>
 <script type="text/javascript">
 
-    d3.json("/api/v0/citations-per-defendant.json" , function(error, response){
+    d3.json("/api/v0/defendant-citation-distribution.json" , function(error, response){
         console.log(response.length)
         console.log(response)
         console.log(response[0])

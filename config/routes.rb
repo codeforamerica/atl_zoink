@@ -14,12 +14,12 @@ Rails.application.routes.draw do
 
   get 'charts' => 'charts#index', :as => 'charts'
   get 'charts/top-violations' => 'charts#top_violations', :as => 'top_violations_chart'
-  get 'charts/citations-per-defendant' => 'charts#citations_per_defendant', :as => 'citations_per_defendant_chart'
+  get 'charts/defendant-citation-distribution' => 'charts#defendant_citation_distribution', :as => 'defendant_citation_distribution_chart'
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v0 do
       get 'top-violations' => 'api#top_violations'
-      get 'citations-per-defendant' => 'api#citations_per_defendant'
+      get 'defendant-citation-distribution' => 'api#defendant_citation_distribution'
     end
   end
 
