@@ -51,6 +51,7 @@ group :development do
 end
 
 gem "httparty"
+gem 'ruby-progressbar'
 
 group :production do
   gem 'rails_12factor'

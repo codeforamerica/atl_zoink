@@ -41,3 +41,9 @@
   + http://stackoverflow.com/questions/19960831/rspec-expect-vs-expect-with-block-whats-the-difference
   + http://stackoverflow.com/questions/12947910/force-strings-to-utf-8-from-any-encoding
   + http://graysoftinc.com/character-encodings/ruby-19s-string
+  + http://stackoverflow.com/questions/24906826/how-to-get-result-from-string-agg-with-a-proper-order-by
+  + http://stackoverflow.com/questions/6214144/ruby-convert-string-to-date
+  + http://stackoverflow.com/questions/753919/run-a-single-migration-file
+  + https://github.com/jfelchner/ruby-progressbar/wiki/Options
+  + https://coderwall.com/p/_yrafw/skipping-before-hook-for-a-few-test-cases-in-rspec
+  + http://stackoverflow.com/questions/7743039/killing-abandoned-process-on-heroku
