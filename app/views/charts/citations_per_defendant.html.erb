@@ -10,16 +10,6 @@
         console.log(response)
         console.log(response[0])
 
-        var response = [
-          {"citation_count":1, "defendant_count":100000},
-          {"citation_count":2, "defendant_count":40000},
-          {"citation_count":3, "defendant_count":15000},
-          {"citation_count":4, "defendant_count":6000},
-          {"citation_count":5, "defendant_count":2000},
-          {"citation_count":6, "defendant_count":700},
-          {"citation_count":7, "defendant_count":100},
-        ]
-
         var data_categories = [0] // we don't (yet) have data on how many defendants do not have a citation
         var citation_counts = response.map(function(row){ return row["citation_count"] })
         data_categories = data_categories.concat(citation_counts)

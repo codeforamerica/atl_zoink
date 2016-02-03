@@ -47,3 +47,4 @@
   + https://github.com/jfelchner/ruby-progressbar/wiki/Options
   + https://coderwall.com/p/_yrafw/skipping-before-hook-for-a-few-test-cases-in-rspec
   + http://stackoverflow.com/questions/7743039/killing-abandoned-process-on-heroku
+  + http://www.w3schools.com/jsref/jsref_concat_array.asp

@@ -35,7 +35,15 @@ class Api::V0::ApiController < ApplicationController
 
 
   def citations_per_defendant
-    @citation_distributions = [{"1":100000,"2":40000,"3":15000,"4":6000,"5":2000,"6":700,"7":100}]
+    @citation_distributions = [
+      {"citation_count":1, "defendant_count":100000},
+      {"citation_count":2, "defendant_count":40000},
+      {"citation_count":3, "defendant_count":15000},
+      {"citation_count":4, "defendant_count":6000},
+      {"citation_count":5, "defendant_count":2000},
+      {"citation_count":6, "defendant_count":700},
+      {"citation_count":7, "defendant_count":100},
+    ]
 
     respond_to do |format|
       format.json { render json: @citation_distributions }
