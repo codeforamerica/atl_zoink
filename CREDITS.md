@@ -51,3 +51,4 @@
   + http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/highcharts/tooltip/formatter-simple/
   + http://stackoverflow.com/questions/5731193/how-to-format-numbers-using-javascript
   + http://api.highcharts.com/highcharts#plotOptions.series.dataLabels
+  + http://getbootstrap.com/css/#tables

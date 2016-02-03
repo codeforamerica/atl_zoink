@@ -1,42 +1,44 @@
 <h2>Data Sources</h2>
 
-<p>
+<p class="lead">
   Processed <%= number_with_delimiter(@row_count, :delimiter => ',') %>
-  rows from <%= number_with_delimiter(@extracted_endpoint_count, :delimiter => ',') %> valid urls
+  records from <%= number_with_delimiter(@extracted_endpoint_count, :delimiter => ',') %> valid urls
   posted by 1 municipality.
 </p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Courtbot name</th>
-      <th>Upload date</th>
-      <th>Requested at</th>
-      <th>Response received at</th>
-      <th>Response code</th>
-      <th>String encoding</th>
-      <th>Row count</th>
-      <th>Extracted at</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @endpoints.each do |endpoint| %>
-    <tr>
-      <td><a href="https://github.com/codeforamerica/courtbot">Atlanta (ATL)</a></td>
-      <td><%= endpoint.upload_date %></td>
-      <td><%= endpoint.requested_at %></td>
-      <td><%= endpoint.response_received_at %></td>
-      <td>
-      <% if endpoint.response_code == 200 %>
-        <%= link_to endpoint.response_code, endpoint.url, class: "btn btn-primary" %>
-      <% else %>
-        <%= endpoint.response_code %>
-      <% end %>
-      </td>
-      <td><%= endpoint.string_encoding %></td>
-      <td><%= endpoint.row_count %></td>
-      <td><%= endpoint.extracted_at %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Courtbot name</th>
+        <th>Upload date</th>
+        <th>Requested at</th>
+        <th>Response received at</th>
+        <th>Response code</th>
+        <th>String encoding</th>
+        <th>Row count</th>
+        <th>Extracted at</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @endpoints.each do |endpoint| %>
+      <tr>
+        <td><a href="https://github.com/codeforamerica/courtbot">Atlanta (ATL)</a></td>
+        <td><%= endpoint.upload_date %></td>
+        <td><%= endpoint.requested_at %></td>
+        <td><%= endpoint.response_received_at %></td>
+        <td>
+        <% if endpoint.response_code == 200 %>
+          <%= link_to endpoint.response_code, endpoint.url, class: "btn btn-primary" %>
+        <% else %>
+          <%= endpoint.response_code %>
+        <% end %>
+        </td>
+        <td><%= endpoint.string_encoding %></td>
+        <td><%= endpoint.row_count %></td>
+        <td><%= endpoint.extracted_at %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
